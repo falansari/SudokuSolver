@@ -1,2 +1,2 @@
 # SudokuSolver
-General Assembly's JAVA bootcamp unit 3 algorithms project: Write an AI that auto-solves sudoku puzzles
+General Assembly's JAVA bootcamp unit 3 algorithms project: Write an an algorithm solution that auto-solves Sudoku puzzles.

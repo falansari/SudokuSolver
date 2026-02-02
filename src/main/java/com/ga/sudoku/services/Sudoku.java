@@ -101,10 +101,10 @@ public class Sudoku {
         for (int row = 0; row < 9; row++) {
             if (row != 0) sb.append("\n");
 
-            if (row == 3 || row == 6) sb.append(separatorLine).append("\n");
+            if (row == 3 || row == 6) sb.append(separatorLine).append("\n"); // line break below sub-grids
 
             for (int column = 0; column < 9; column++) {
-                if (column == 3 || column == 6) sb.append(" |");
+                if (column == 3 || column == 6) sb.append(" |"); // line break between sub-grids
 
                 if (column != 0) sb.append(" ");
 
@@ -119,6 +119,29 @@ public class Sudoku {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Print out the contents of a puzzle file to a string.
+     * @param file MultipartFile text file
+     * @return String puzzle printout
+     * @throws SudokuFileNotFoundException Handle invalid files
+     */
+    public String printPuzzle(MultipartFile file) throws SudokuFileNotFoundException {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+
+            return stringBuilder.toString();
+
+        } catch (IOException e) {
+            throw new SudokuFileNotFoundException("Error reading puzzle file: " + file);
+        }
     }
 
     /**

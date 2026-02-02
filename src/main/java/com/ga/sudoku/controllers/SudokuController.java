@@ -30,4 +30,9 @@ public class SudokuController {
     public boolean savePuzzle(@RequestPart("board") SudokuCell[][] board, @RequestPart("filepath") String filepath) {
         return sudoku.savePuzzle(board, filepath);
     }
+
+    @PostMapping(value = "print", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String printPuzzle(@RequestParam("textFile") MultipartFile puzzle) throws SudokuFileNotFoundException {
+        return sudoku.printPuzzle(puzzle);
+    }
 }

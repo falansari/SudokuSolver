@@ -18,11 +18,11 @@ import java.util.List;
  */
 @Getter @Setter
 @Service
-public class SudokuService {
+public class Sudoku {
     private SudokuCell[][] board;
 
     @Autowired
-    public SudokuService(SudokuCell[][] board) {
+    public Sudoku(SudokuCell[][] board) {
         this.board = board;
     }
 
@@ -85,6 +85,35 @@ public class SudokuService {
         } catch (IOException e) {
             throw new SudokuFileNotFoundException("Error reading puzzle file: " + textFile.getOriginalFilename());
         }
+    }
+
+    public String printPuzzle(SudokuCell[][] board) {
+        StringBuilder sb = new StringBuilder();
+        String separatorLine = "+-------+-------+-------+";
+
+        sb.append(separatorLine).append("\n");
+
+        for (int row = 0; row < 9; row++) {
+            if (row != 0) sb.append("\n");
+
+            if (row == 3 || row == 6) sb.append(separatorLine).append("\n");
+
+            for (int column = 0; column < 9; column++) {
+                if (column == 3 || column == 6) sb.append(" |");
+
+                if (column != 0) sb.append(" ");
+
+                if (column == 0) sb.append("| ");
+
+                sb.append(board[row][column].toString());
+
+                if (column == 8) sb.append(" |");
+            }
+
+            if (row == 8) sb.append("\n").append(separatorLine);
+        }
+
+        return sb.toString();
     }
 
     /**

@@ -21,8 +21,13 @@ public class SudokuController {
         return sudoku.loadPuzzle(puzzle);
     }
 
-    @PostMapping(value = "/print")
-    public String printPuzzle(@RequestBody SudokuCell[][] board) {
-        return sudoku.printPuzzle(board);
+    @PostMapping(value = "/pretty")
+    public String prettifyPuzzle(@RequestBody SudokuCell[][] board) {
+        return sudoku.prettifyPuzzle(board);
+    }
+
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public boolean savePuzzle(@RequestPart("board") SudokuCell[][] board, @RequestPart("filepath") String filepath) {
+        return sudoku.savePuzzle(board, filepath);
     }
 }

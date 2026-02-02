@@ -87,7 +87,12 @@ public class Sudoku {
         }
     }
 
-    public String printPuzzle(SudokuCell[][] board) {
+    /**
+     * Create a pretty version of a puzzle board for saving and display.
+     * @param board SudokuCell[][] puzzle board to be printed.
+     * @return String
+     */
+    public String prettifyPuzzle(SudokuCell[][] board) {
         StringBuilder sb = new StringBuilder();
         String separatorLine = "+-------+-------+-------+";
 
@@ -114,6 +119,27 @@ public class Sudoku {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Save a sudoku board to solved puzzles folder.
+     * @param board SudokuCell[][] The Sudoku board to save
+     * @param filepath String docs/solved/puzzle#.solution.txt for default solved puzzles folder in project.
+     * @return boolean True if successfully saved.
+     */
+    public boolean savePuzzle(SudokuCell[][] board, String filepath) {
+        String formattedPuzzle = prettifyPuzzle(board);
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+            writer.write(formattedPuzzle);
+            writer.close();
+
+            return true;
+
+        } catch (Exception e) {
+            throw new InvalidCharacterException("Error writing file: " + filepath);
+        }
     }
 
     /**

@@ -64,7 +64,7 @@ public class SudokuController {
      * @param board SudokuCell[][] Unsolved/in-progress board
      * @return SudokuCell[][] Solved board
      */
-    @GetMapping(value = "/solve")
+    @PostMapping(value = "/solve")
     public SudokuCell[][] solvePuzzle(@RequestBody SudokuCell[][] board) {
         return sudoku.solvePuzzle(board);
     }

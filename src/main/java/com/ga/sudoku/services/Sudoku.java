@@ -70,17 +70,19 @@ public class Sudoku {
 
             if (row != 9) throw new InvalidCharacterException("""
                     Puzzle must have exactly 9 rows. It should have the following format:
-                    0  0  0  |  1  5  0  |  0  7  0
-                    1  0  6  |  0  0  0  |  8  2  0
-                    3  0  0  |  8  6  0  |  0  4  0
-                    --------------------------------
-                    9  0  0  |  4  0  0  |  5  6  7
-                    0  0  4  |  7  0  8  |  3  0  0
-                    7  3  2  |  0  0  6  |  0  0  4
-                    --------------------------------
-                    0  4  0  |  0  8  1  |  0  0  9
-                    0  1  7  |  0  0  0  |  2  0  8
-                    0  5  0  |  0  3  7  |  0  0  0""");
+                    +-------+-------+-------+
+                    | 0 0 0 | 1 5 0 | 0 7 0 |
+                    | 1 0 6 | 0 0 0 | 8 2 0 |
+                    | 3 0 0 | 8 6 0 | 0 4 0 |
+                    +-------+-------+-------+
+                    | 9 0 0 | 4 0 0 | 5 6 7 |
+                    | 0 0 4 | 7 0 8 | 3 0 0 |
+                    | 7 3 2 | 0 0 6 | 0 0 4 |
+                    +-------+-------+-------+
+                    | 0 4 0 | 0 8 1 | 0 0 9 |
+                    | 0 1 7 | 0 0 0 | 2 0 8 |
+                    | 0 5 0 | 0 3 7 | 0 0 0 |
+                    +-------+-------+-------+""");
 
             return board;
 
@@ -101,20 +103,20 @@ public class Sudoku {
         sb.append(separatorLine).append("\n");
 
         for (int row = 0; row < 9; row++) {
-            if (row != 0) sb.append("\n");
+            if (row != 0) sb.append("\n"); // Add a line break between rows
 
-            if (row == 3 || row == 6) sb.append(separatorLine).append("\n"); // line break below sub-grids
+            if (row == 3 || row == 6) sb.append(separatorLine).append("\n"); // Add a line break below sub-grids
 
             for (int column = 0; column < 9; column++) {
                 if (column == 3 || column == 6) sb.append(" |"); // line break between sub-grids
 
-                if (column != 0) sb.append(" ");
+                if (column != 0) sb.append(" "); // Add spaces between columns
 
-                if (column == 0) sb.append("| ");
+                if (column == 0) sb.append("| "); // Add line separator at beginning of row
 
                 sb.append(board[row][column].toString());
 
-                if (column == 8) sb.append(" |");
+                if (column == 8) sb.append(" |"); // Add line separator at end of row
             }
 
             if (row == 8) sb.append("\n").append(separatorLine);

@@ -3,6 +3,7 @@ package com.ga.sudoku.services;
 import com.ga.sudoku.exceptions.InvalidCharacterException;
 import com.ga.sudoku.exceptions.SudokuFileNotFoundException;
 import com.ga.sudoku.models.SudokuCell;
+import com.ga.sudoku.utils.SudokuSolver;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,6 +164,15 @@ public class Sudoku {
         } catch (Exception e) {
             throw new InvalidCharacterException("Error writing file: " + filepath);
         }
+    }
+
+    /**
+     * Solve a puzzle board.
+     * @param board SudokuCell[][] The 9x9 Sudoku puzzle board
+     * @return SudokuCell[][] The solved board
+     */
+    public SudokuCell[][] solvePuzzle(SudokuCell[][] board) {
+        return SudokuSolver.solveSudokuPuzzle(board, 0, 0);
     }
 
     /**

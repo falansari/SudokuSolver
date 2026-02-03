@@ -103,20 +103,20 @@ public class Sudoku {
         sb.append(separatorLine).append("\n");
 
         for (int row = 0; row < 9; row++) {
-            if (row != 0) sb.append("\n");
+            if (row != 0) sb.append("\n"); // Add a line break between rows
 
-            if (row == 3 || row == 6) sb.append(separatorLine).append("\n"); // line break below sub-grids
+            if (row == 3 || row == 6) sb.append(separatorLine).append("\n"); // Add a line break below sub-grids
 
             for (int column = 0; column < 9; column++) {
                 if (column == 3 || column == 6) sb.append(" |"); // line break between sub-grids
 
-                if (column != 0) sb.append(" ");
+                if (column != 0) sb.append(" "); // Add spaces between columns
 
-                if (column == 0) sb.append("| ");
+                if (column == 0) sb.append("| "); // Add line separator at beginning of row
 
                 sb.append(board[row][column].toString());
 
-                if (column == 8) sb.append(" |");
+                if (column == 8) sb.append(" |"); // Add line separator at end of row
             }
 
             if (row == 8) sb.append("\n").append(separatorLine);

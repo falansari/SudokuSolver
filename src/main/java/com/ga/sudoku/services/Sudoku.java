@@ -42,15 +42,16 @@ public class Sudoku {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(textFile.getInputStream()));
             String line;
             int row = 0;
+            int prettifiedPuzzleLines = 13;
 
-            while ((line = bufferedReader.readLine()) != null && row < 9) { // Iterate through the file line by line
+            while ((line = bufferedReader.readLine()) != null && row < prettifiedPuzzleLines) { // Iterate through the file line by line
                 line = line.trim();
 
-                if (line.startsWith("-")) continue; // Skip separator ----- lines
+                if (line.startsWith("+")) continue; // Skip separator ----- lines
 
                 String[] rawValues = line.split("\\s+"); // Remove spaces in the rows
 
-                // Filter out sub-grid separators | and the true values only
+                // Filter out sub-grid separators | and add the true values only
                 List<String> values = new ArrayList<>();
                 for (String value : rawValues) {
                     if (!value.equals("|")) values.add(value);

@@ -3,6 +3,7 @@ package com.ga.sudoku.controllers;
 import com.ga.sudoku.exceptions.SudokuFileNotFoundException;
 import com.ga.sudoku.models.SudokuCell;
 import com.ga.sudoku.services.Sudoku;
+import com.ga.sudoku.utils.SudokuSolver;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,8 +32,13 @@ public class SudokuController {
         return sudoku.savePuzzle(board, filepath);
     }
 
-    @PostMapping(value = "print", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/print", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String printPuzzle(@RequestParam("textFile") MultipartFile puzzle) throws SudokuFileNotFoundException {
         return sudoku.printPuzzle(puzzle);
+    }
+
+    @GetMapping(value = "/solve")
+    public SudokuCell[][] solvePuzzle(@RequestBody SudokuCell[][] board) {
+        return sudoku.solvePuzzle(board);
     }
 }

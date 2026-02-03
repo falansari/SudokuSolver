@@ -6,30 +6,57 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SudokuSolver {
 
+    /**
+     * Solve a 9x9 sudoku puzzle.
+     * @param board SudokuCell[][] Puzzle to solve.
+     * @param row int
+     * @param column int
+     * @return SudokuCell[][] Solved puzzle board.
+     */
     public SudokuCell[][] solveSudokuPuzzle(SudokuCell[][] board, int row, int column) {
-        // base case: Reached nth column of the last row
-        if (row == 8 && column == 8) return board;
+        if (puzzleIsSolved(board, row, column)) {
+            return board;
+        } else {
+            throw new IllegalArgumentException("Puzzle is not solvable");
+        }
+    }
 
-        if (column == 8) { // If last column of the row go to the next row
+    /**
+     * Recursively go through the puzzle and solve it cell by cell until all cells are solved.
+     * @param board SudokuCell[][] 9x9 Puzzle board to solve.
+     * @param row int
+     * @param column int
+     * @return boolean true if solved, false if not.
+     */
+    private boolean puzzleIsSolved(SudokuCell[][] board, int row, int column) {
+        // base case: Reached nth column of the last row
+        System.out.println("CURRENT ROW: " + row + ", COLUMN: " + column);
+        if (row == 8 && column == 9) return true;
+
+        if (column == 9) { // If last column of the row go to the next row
             row++;
             column = 0;
         }
 
         // If cell is already occupied then move forward
         if (board[row][column].getCell() != 0) {
-            return solveSudokuPuzzle(board, row, column + 1);
+            System.out.println("ALREADY SOLVED CELL: "  + board[row][column].getCell());
+            return puzzleIsSolved(board, row, column + 1);
         }
 
         for (int cell = 1; cell <= 9; cell++) { // valid numbers 1-9
             if (numberIsSafe(board, row, column, cell)) { // Add cell if it's safe at current position
+                System.out.println("SOLVING CELL: " + cell);
                 board[row][column].setCell(cell);
-                return solveSudokuPuzzle(board, row, column + 1); // Move on to checking next cell
-            } else {
-                board[row][column].setCell(0); // Not safe so remains unsolved
+
+                if (puzzleIsSolved(board, row, column + 1)) return true; // solved path
+
+                // Backtrack of recursion failed
+                board[row][column].setCell(0);
             }
         }
 
-        return board;
+        return false; // No safe number was found. Repeat iteration.
     }
 
     /**
@@ -41,12 +68,8 @@ public class SudokuSolver {
      * @return boolean True if safe, false if not.
      */
     private boolean numberIsSafe(SudokuCell[][] board, int row, int column, int cell) {
-        System.out.println("CELL: " + cell);
         for (int i = 0; i < 9; i++) { // Number mustn't exist in row
-            if (board[row][i].getCell() == cell) {
-                System.out.println("BOARD CELL: " + board[row][column].getCell());
-                return false;
-            }
+            if (board[row][i].getCell() == cell) return false;
         }
 
         for (int i = 0; i < 9; i++) { // Number mustn't exist in column
@@ -54,12 +77,11 @@ public class SudokuSolver {
         }
 
         // Number mustn't exist in 3x3 sub-grid
-        int startRow = row - (row % 3);
-        int startColumn = column - (column % 3);
+        final int startRow = row - (row % 3);
+        final int startColumn = column - (column % 3);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i + startRow][j + startColumn].getCell() == cell) {
-                    System.out.println("BOARD CELL: " + board[i][j].getCell());
                     return false;
                 }
             }
